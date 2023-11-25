@@ -23,7 +23,7 @@ def check_last_version() -> [bool, str, str]:
     if CURRENT_VERSION == GITHUB_CONFIG['version']:
         return [True, CURRENT_VERSION, GITHUB_CONFIG['version']]
 
-    return [False, CURRENT_VERSION, '']
+    return [False, CURRENT_VERSION, GITHUB_CONFIG['version']]
 
 def attempt_update(current_version: str, latest_version: str) -> None:
     print("")
@@ -35,7 +35,7 @@ def attempt_update(current_version: str, latest_version: str) -> None:
             console.display.statement("Removing index.lock file from .git directory")
             os.remove(LOCK_FILE)
 
-        subprocess.run(f"cd wp-dev/ && git checkout . && git pull {config.GITHUB_URL} HEAD && cd ..", shell=True, stdout=subprocess.PIPE, stderr=subprocess.PIPE, check=True)
+        subprocess.run(f"cd wp-dev/ && git checkout . && git pull {config.GITHUB_URL} HEAD && cd ..", shell=True, stdout=subprocess.PIPE, stderr=subprocess.PIPE)
         if version() == latest_version:
             success = True
             
