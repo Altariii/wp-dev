@@ -1,6 +1,9 @@
 import argparse
 
+from ..modules import updater
+
 from ..config import config
+from ..constants import config as config_constants
 from ..utils import console
 from ..commands.exit import bye
 
@@ -44,14 +47,32 @@ HELP
 EXAMPLE USAGE:
         python3 wp-dev.py
 
-    """.format(config.version(), console.colors.RED, console.colors.ENDC, console.colors.BOLD, config.GITHUB_URL)
+    """.format(config.version(), console.colors.RED, console.colors.ENDC, console.colors.BOLD, config_constants.GITHUB_URL)
     )
     bye()
 
 def version() -> None:
-    print("\n\n")
     console.display.info("WP-DEV Version: " + config.version())
     bye()
 
 def update() -> None:
-    # TODO: CONTINUE
+    console.display.clear()
+    console.display.banner()
+    console.display.description("Update Menu")
+    console.display.info("Checking for Updates...\n")
+
+    [has_latest_version, current_version, latest_version] = updater.check_last_version()
+
+    if has_latest_version:
+        print("")
+        console.display.result("WP-DEV is up to date, you're good to go!", "")
+    else:
+        print("")
+        console.display.success("Update Available!")
+        update_consent = console.display.request("Do you want to update WP-DEV now? (y/n)")
+        if update_consent.lower() == 'y':
+            updater.attempt_update(current_version, latest_version)
+        else:
+            print("")
+            console.display.warning("Update Cancelled!")
+        bye()

@@ -3,10 +3,9 @@
 # This is a part of WP-DEV, check the LICENSE file for more information
 # Copyright (c) 2024 /Sirvelia
 
-import json
+from ..constants.config import CONFIG_FILE_PATH
 
-GITHUB_URL          = ''
-CONFIG_FILE_PATH    = './config/config.json'
+import json
 
 def get_config() -> dict:
     config_file = open(CONFIG_FILE_PATH)

@@ -42,18 +42,25 @@ class display:
         print(colors.BOLD + colors.YELLOW + "[!] " + colors.ENDC + msg)
 
     def description(msg: str) -> None:
-        print(colors.WHITE_BG + colors.BLACK + colors.BOLD + " [+]  " + msg + "  [+] " + colors.ENDC)
+        print(colors.WHITE_BG + colors.BLACK + colors.BOLD + " [+]  " + msg + "  [+] " + colors.ENDC + "\n")
 
     def info(msg: str) -> None:
         print(colors.BOLD + colors.LBLUE + "[i] " + colors.ENDC + msg)
 
+    def download_info(msg: str) -> None:
+        print(colors.BOLD + colors.FGREEN + '[↓] ' + colors.ENDC + msg)
+
     def success(msg: str) -> None:
         print(colors.BOLD + colors.FGREEN + "[*] " + colors.ENDC + msg)
+
 
     def result(stm: str, msg: str) -> None:
         try: print(colors.BOLD + colors.FGREEN + "[✓] " + stm + colors.ENDC + msg)
         except UnicodeEncodeError:
             print(colors.BOLD + colors.FGREEN + "[>] " + stm + colors.ENDC + msg)
+
+    def request(msg: str) -> str:
+        return input("[" + colors.CYAN + "#" + colors.ENDC + "] " + msg + ": ")
 
     def banner():
         print(colors.BOLD + colors.GREEN + """
