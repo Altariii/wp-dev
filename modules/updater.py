@@ -35,7 +35,7 @@ def attempt_update(current_version: str, latest_version: str) -> None:
             console.display.statement("Removing index.lock file from .git directory")
             os.remove(LOCK_FILE)
 
-        subprocess.run(("git checkout . && git pull %s HEAD") % config.GITHUB_URL, shell=True, stdout=subprocess.PIPE, stderr=subprocess.PIPE)
+        subprocess.run(("cd wp-dev/ && git checkout . && git pull %s HEAD && cd..") % config.GITHUB_URL, shell=True, stdout=subprocess.PIPE, stderr=subprocess.PIPE)
         if version() == latest_version:
             success = True
             
