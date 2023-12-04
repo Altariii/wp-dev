@@ -1,4 +1,5 @@
 import os
+import subprocess
 
 from ..config.config import version
 
@@ -76,3 +77,21 @@ __    __    __  ______             _____    ____   __    __
     def clear() -> None:
         if os.name == 'nt': os.system('cls')
         else: os.system('clear')
+
+def run_command(command: str, path: str, show_output: bool = True, input: str = '') -> str:
+    if show_output:
+        result = subprocess.run([word for word in command.split()], cwd=path, input=input.encode())
+        return ""
+    else:
+        result = subprocess.run([word for word in command.split()], cwd=path, stdout=subprocess.PIPE, stderr=subprocess.PIPE, input=input.encode())
+
+    stdout_str = result.stdout.decode('utf-8')
+
+    if result.returncode != 0:
+        print(f"Command failed with return code {result.returncode}. Error message: {result.stderr.decode('utf-8')}")
+
+    return stdout_str
+
+def run_commands(commands: list[str], path: str, show_output: bool = True, input: str = '') -> None:
+    for command in commands:
+        run_command(command, path, show_output, input)

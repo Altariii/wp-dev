@@ -14,6 +14,17 @@ def get_config() -> dict:
 
     return config
 
+def save_new_config(config: dict) -> None:
+    config_file = open(CONFIG_FILE_PATH, 'w')
+    json.dump(config, config_file, indent=4)
+    config_file.close()    
+
 def version() -> str:
     config = get_config()
     return config['version']
+
+def workspace() -> str:
+    config = get_config()
+    if 'workspace_path' in config:
+        return config['workspace_path']
+    return False

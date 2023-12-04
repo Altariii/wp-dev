@@ -27,6 +27,8 @@ def handle_args(args) -> None:
     if args.update:
         update()
 
+    # TODO: ADD ARGUMENT FOR EACH INSTRUCTIONS, WITH INTERNAL CONFIGURATION AS FLAGS
+
 def help() -> None:
     print(
     """
@@ -75,4 +77,4 @@ def update() -> None:
         else:
             print("")
             console.display.warning("Update Cancelled!")
-        bye()
+    bye()

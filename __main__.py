@@ -15,10 +15,16 @@ import os
 import json
 
 from .modules.argument_handler import define_args
+from .modules.commands_handler import CommandList
 from .utils.signals import handle_signals
+from .utils import console
 
 # Define WP-DEV Arguments
 define_args()
 
 # Handle console signals
 handle_signals()
+
+# Main Menu
+command_list = CommandList()
+command_list.choice()
