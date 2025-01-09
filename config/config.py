@@ -23,8 +23,14 @@ def version() -> str:
     config = get_config()
     return config['version']
 
-def workspace() -> str:
+def workspaces() -> str:
     config = get_config()
-    if 'workspace_path' in config:
-        return config['workspace_path']
+    if 'workspaces' in config:
+        return config['workspaces']
+    return False
+
+def git_accounts() -> list[dict]:
+    config = get_config()
+    if 'git_accounts' in config:
+        return config['git_accounts']
     return False

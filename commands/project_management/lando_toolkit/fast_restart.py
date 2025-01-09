@@ -1,8 +1,8 @@
 import os
 
-from ..constants.config import LANDO_CONFIG_NAME
-from ..utils import console
-from ..utils import lando
+from ....constants.config import LANDO_CONFIG_NAME
+from ....utils import console
+from ....utils import lando
 
 def fast_restart() -> None:
     console.display.clear()

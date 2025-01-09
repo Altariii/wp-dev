@@ -1,19 +1,23 @@
 import os
 
-from ..config.config import workspace, get_config, save_new_config
-from ..utils import console
+from ...config.config import workspaces, get_config, save_new_config
+from ...utils import console
 
 def set_new_workspace() -> None:
+    console.display.clear()
+    console.display.banner()
+    console.display.description("WP-DEV Workspace Adder")
     print("")
-    current_workspace = workspace()
-    if not current_workspace:
-        console.display.info("No previous workspace has been found")
+
+    current_workspaces = workspaces()
+    if not current_workspaces:
+        console.display.info("No previous workspaces have been found")
     else:
-        console.display.warning(f"A previous workspace has been found: {current_workspace}")
-        confirm = console.display.request("Are you sure you want to replace the existing workspace? (y/n)")
-        if confirm.lower() != 'y':
-            console.display.warning("Workspace update aborted")
-            return
+        console.display.info("Current Workspaces:")
+        print("")
+        for workspace in current_workspaces:
+            console.display.statement(workspace)
+        print("")
         
     config = get_config()
     validated_workspace = False
@@ -25,10 +29,13 @@ def set_new_workspace() -> None:
             confirm = console.display.request("Are you sure this is the correct path? You can try again with a different path. (y/n)")
             if confirm.lower() == 'y':
                 validated_workspace = True
+        elif new_workspace in config['workspaces']:
+            console.display.info("Given workspace is already saved.")
+            return
         else:
             validated_workspace = True
 
-    config['workspace_path'] = new_workspace
+    config['workspaces'].append(new_workspace)
     save_new_config(config)
     console.display.success("New Workspace set successfully")
 
@@ -36,5 +43,5 @@ class SetWorkspaceCommand:
     parent_page = "WP-DEV Configuration"
     submenu_page = False
     key = "1"
-    description = "Set or Update the WP-DEV Workspace"
+    description = "Add a WP-DEV Workspace"
     handler = set_new_workspace

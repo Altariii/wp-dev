@@ -1,14 +1,14 @@
 import os
 import webbrowser
 
-from ..constants.config import LANDO_CONFIG_NAME
-from ..utils import console
-from ..utils import lando
+from ....constants.config import LANDO_CONFIG_NAME
+from ....utils import console
+from ....utils import lando
 
-def fast_show_database() -> None:
+def fast_show_mailhog() -> None:
     console.display.clear()
     console.display.banner()
-    console.display.description("WP-DEV Project Lando Database")
+    console.display.description("WP-DEV Project Lando Mailhog")
     print("")
 
     project_path = lando.get_running_service_path()
@@ -28,24 +28,24 @@ def fast_show_database() -> None:
         console.display.error("Lando info could not be obtained.")
         return
     
-    database_url = ""
+    mailhog_url = ""
     for service in lando_info:
-        if service['service'] != 'pma':
+        if service['service'] != 'mailhog':
             continue
 
-        database_url = service['urls'][-1]
+        mailhog_url = service['urls'][-1]
         break
     
     confirm = console.display.request("Do you want to open it on browser? (y/n)")
     if confirm.lower() == 'y':
-        webbrowser.open(database_url)
+        webbrowser.open(mailhog_url)
         pass
     else:
-        console.display.info("Your current project PMA URL is: " + database_url)
+        console.display.info("Your current project Mailhog URL is: " + mailhog_url)
 
-class FastShowDatabaseCommand:
+class FastShowMailhogCommand:
     parent_page = "Fast Lando Toolkit"
     submenu_page = False
-    key = '7'
-    description = 'Shows the Lando Project PMA'
-    handler = fast_show_database
+    key = '6'
+    description = 'Shows the Lando Project Mailhog'
+    handler = fast_show_mailhog

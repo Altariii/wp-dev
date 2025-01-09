@@ -1,11 +1,9 @@
 import os
-import webbrowser
 
-from ..constants.config import LANDO_CONFIG_NAME
-from ..constants.logs import LOG_FORMATS
-from ..utils import console
-from ..utils import lando
-from ..utils import wordpress
+from ....constants.logs import LOG_FORMATS
+from ....utils import console
+from ....utils import lando
+from ....utils import wordpress
 
 def style_log(log: str, find: str, color: str) -> str:
     if find in log:

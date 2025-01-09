@@ -9,7 +9,7 @@ from ..constants import config
 from ..constants import connection as connection_constants
 from ..commands.exit import bye
 
-def check_last_version() -> [bool, str, str]:
+def check_last_version() -> list[bool, str, str]:
     [response_code, source_code, _, _] = connection.get_source(config.GITHUB_CONFIG_URL)
     if response_code != connection_constants.OK_RESPONSE:
         console.display.error("Could not get the latest version, Error: " + source_code)

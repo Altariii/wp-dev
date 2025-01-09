@@ -2,29 +2,45 @@ import time
 
 from ..utils import console
 
-from ..commands.fast_lando_toolkit import FastLandoToolkitPage
-from ..commands.fast_start import FastStartCommand
-from ..commands.fast_restart import FastRestartCommand
-from ..commands.fast_rebuild import FastRebuildCommand
-from ..commands.fast_stop import FastStopCommand
-from ..commands.fast_show import FastShowCommand
-from ..commands.fast_show_mailhog import FastShowMailhogCommand
-from ..commands.fast_show_database import FastShowDatabaseCommand
-from ..commands.fast_show_logs import FastShowLogsCommand
-
-from ..commands.project_management import ProjectManagementPage
+from ..commands.projects import ProjectManagementPage
+from ..commands.plugins import PluginManagementPage
 from ..commands.config import ConfigPage
 from ..commands.exit import ExitCommand, bye
 
-from ..commands.start import StartCommand
+from ..commands.project_management.fast_lando_toolkit import FastLandoToolkitPage
+from ..commands.project_management.start import StartCommand
+from ..commands.project_management.open_folder import OpenFolderCommand
+from ..commands.project_management.make import MakeCommand
+from ..commands.project_management.update import UpdateCommand
+from ..commands.project_management.destroy import DestroyCommand
 
-from ..commands.set_workspace import SetWorkspaceCommand
+from ..commands.project_management.lando_toolkit.fast_start import FastStartCommand
+from ..commands.project_management.lando_toolkit.fast_restart import FastRestartCommand
+from ..commands.project_management.lando_toolkit.fast_rebuild import FastRebuildCommand
+from ..commands.project_management.lando_toolkit.fast_stop import FastStopCommand
+from ..commands.project_management.lando_toolkit.fast_show import FastShowCommand
+from ..commands.project_management.lando_toolkit.fast_show_mailhog import FastShowMailhogCommand
+from ..commands.project_management.lando_toolkit.fast_show_database import FastShowDatabaseCommand
+from ..commands.project_management.lando_toolkit.fast_show_logs import FastShowLogsCommand
+from ..commands.project_management.lando_toolkit.fast_open_folder import FastOpenFolderCommand
+
+from ..commands.plugin_management.create_plugin import CreatePluginCommand
+
+from ..commands.wpdev_configuration.set_workspace import SetWorkspaceCommand
+from ..commands.wpdev_configuration.remove_workspace import RemoveWorkspaceCommand
+from ..commands.wpdev_configuration.update_wpdev import UpdateWPDevCommand
+from ..commands.wpdev_configuration.manage_git_accounts import ManageGitAccountsPage
+
+from ..commands.wpdev_configuration.git.add_git_account import AddGitAccountCommand
+from ..commands.wpdev_configuration.git.update_git_credentials import UpdateGitCredentialsCommand
+from ..commands.wpdev_configuration.git.remove_git_account import RemoveGitAccountCommand
 
 class CommandList:
     current_pages = ["Main"]
     commands = [
         ProjectManagementPage,
-        # PLUGIN MANAGEMENT PAGE
+        PluginManagementPage,
+        # FRAMEWORK MANAGEMENT COMMAND
         # WORDPRESS CONFIG PAGE
         # DEVELOPER PAGE
         ConfigPage,
@@ -32,29 +48,39 @@ class CommandList:
 
         FastLandoToolkitPage,
         StartCommand,
-        # PrepareCommand
-        # MakeCommand
-        # UpdateCommand
-        # DestroyCommand
+        OpenFolderCommand,
+        MakeCommand,
+        # Make from Duplicator (mirar què es pot fer)
+        UpdateCommand,
+        DestroyCommand,
+        # ExportCommand         (exports project into a wp_dev.project.json file, which can be imported from another folder)
+        # ImportCommand         (imports a previously exported project)
 
-        # CreatePluginCommand
+        CreatePluginCommand, # TODO: (+git integration & readme modification)
         # CreateThemeCommand
         # AddPluginCommand
         # AddThemeCommand
-        # CreateProjectRelease (wp dist-archive)
+        # CreateProjectRelease (wp dist-archive + readme version update + git commits? + Subversion?)
 
-        # VSCodeOpenerCommand
+        # SetupTailwindCSS
+        # SetupDaisyUI
+        # SetupAlpineJS
+        # SetupHikeFlowJS
+
+        # VSCodeOpenerCommand (detects all project dependencies and opens a VSCode)
         # ToggleDebugCommand
-        # ManageUsersCommand
-        # ManageUserRolesCommand
+        # ExecWPCLICommand
         # AddConstantCommand
         # TogglePluginCommand
 
-        # UpdateTailwindPrefixCommand
-
         SetWorkspaceCommand,
-        # ManageGitAccountsCommand
-        # UpdateWPDevCommand
+        RemoveWorkspaceCommand,
+        UpdateWPDevCommand,
+        ManageGitAccountsPage,
+
+        AddGitAccountCommand,
+        UpdateGitCredentialsCommand,
+        RemoveGitAccountCommand,
 
         FastStartCommand,
         FastRestartCommand,
@@ -63,7 +89,8 @@ class CommandList:
         FastShowCommand,
         FastShowMailhogCommand,
         FastShowDatabaseCommand,
-        FastShowLogsCommand
+        FastShowLogsCommand,
+        FastOpenFolderCommand
     ]
     command_menus = {'Main': []}
 

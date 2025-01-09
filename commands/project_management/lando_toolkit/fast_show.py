@@ -1,9 +1,9 @@
 import os
 import webbrowser
 
-from ..constants.config import LANDO_CONFIG_NAME
-from ..utils import console
-from ..utils import lando
+from ....constants.config import LANDO_CONFIG_NAME
+from ....utils import console
+from ....utils import lando
 
 def fast_show() -> None:
     console.display.clear()

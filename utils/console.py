@@ -60,8 +60,9 @@ class display:
         except UnicodeEncodeError:
             print(colors.BOLD + colors.FGREEN + "[>] " + stm + colors.ENDC + msg)
 
-    def request(msg: str) -> str:
-        return input("[" + colors.CYAN + "#" + colors.ENDC + "] " + msg + ": ")
+    def request(msg: str, default: str = '') -> str:
+        response = input("[" + colors.CYAN + "#" + colors.ENDC + "] " + msg + ": ")
+        return response if response else default
 
     def banner():
         print(colors.BOLD + colors.GREEN + """
@@ -78,12 +79,12 @@ __    __    __  ______             _____    ____   __    __
         if os.name == 'nt': os.system('cls')
         else: os.system('clear')
 
-def run_command(command: str, path: str, show_output: bool = True, input: str = '') -> str:
+def run_command(command: str, path: str, show_output: bool = True, input: str = '', shell: bool = False) -> str:
     if show_output:
-        result = subprocess.run([word for word in command.split()], cwd=path, input=input.encode())
+        result = subprocess.run([word for word in command.split()] if not shell else command, cwd=path, input=input.encode(), shell=shell)
         return ""
     else:
-        result = subprocess.run([word for word in command.split()], cwd=path, stdout=subprocess.PIPE, stderr=subprocess.PIPE, input=input.encode())
+        result = subprocess.run([word for word in command.split()] if not shell else command, cwd=path, stdout=subprocess.PIPE, stderr=subprocess.PIPE, input=input.encode(), shell=shell)
 
     stdout_str = result.stdout.decode('utf-8')
 
@@ -92,6 +93,6 @@ def run_command(command: str, path: str, show_output: bool = True, input: str = 
 
     return stdout_str
 
-def run_commands(commands: list[str], path: str, show_output: bool = True, input: str = '') -> None:
+def run_commands(commands: list[str], path: str, show_output: bool = True, input: str = '', shell: bool = False) -> None:
     for command in commands:
-        run_command(command, path, show_output, input)
+        run_command(command, path, show_output, input, shell)
